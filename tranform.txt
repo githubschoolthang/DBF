@@ -1,0 +1,78 @@
+Step	1
+Flight:	(Short haul)	or	(long haul)
+-	flightID	*unique
+-	estDepartTime
+-	actDepartTine
+-	actArriveDateTime
+-	avgSpeed
+-	avgHeight
+-	estDuration
+-	estFuel
+
+Aircraft:	
+-aircraftID *unique
+
+
+SH Aircraft
+-	mailCargoCapacity
+
+LH Aircraft
+-	numMedPacks
+-	numDefibrillators
+
+
+Model:
+-	modelID	**unique
+-	economySeats
+-	businessSeats
+-	firstClassSeats
+-	cargoCapacity
+-	fuelCapacity
+-	length
+-	wingspan
+-	serviceHours
+
+Route:
+-	routeID	**unique
+-	description
+
+Locatiion:
+-	airportCode	*unique
+-	country
+-	address
+-	phone
+
+Ticket:
+-	ticketNum	**unique
+-	luggageLimit
+-	seatNum
+-	classCode
+-	medicinalCondition
+-	mealChoice
+
+Customer
+-	customerID	**uniqueID
+-	name
+-	address
+-	country
+-	email
+-	phone
+-	birthdate
+-	passportNum
+
+Staff
+-	staffID	**unique
+-	name
+-	address
+-	email
+-	phone
+-	passportNum
+
+Pilot
+-	qualifications	**doublerectangle
+-	prevHrsPilotExp
+
+
+NEACC Member
+-	memberID	**uniqueID
+-	flightGoldPoints
