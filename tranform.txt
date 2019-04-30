@@ -105,4 +105,6 @@ CAPTAIN (Pilot, Flight{flightID})
 FIRST OFFICER (Pilot, Flight{flightID})
 FOR (Flight, Ticket{ticketNum})
 PLANNED (Route, Flight{flightID})
-
+ARRIVE (Location, Route{routeID})
+DEPART (Location, Route{routeID})
+RESERVED (Customer, Ticket{ticketNum})`
