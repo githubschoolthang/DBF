@@ -91,3 +91,12 @@ Irregular Event	<<	Flight
 -	eventDateTime
 -	eventDescription
 
+
+Step 3	1 to 1 relationships
+
+LOGGED	(Service, Aricraft)
+-	Service: serviceDate*, description, cost
+
+
+
+
