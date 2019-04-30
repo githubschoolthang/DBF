@@ -76,3 +76,18 @@ Pilot
 NEACC Member
 -	memberID	**uniqueID
 -	flightGoldPoints
+
+
+
+Step 2, Weak entities
+
+Service		<<	aircraft
+-	serviceDate	**unique
+-	description
+-	cost
+
+Irregular Event	<<	Flight
+-	eventNumber	**unique
+-	eventDateTime
+-	eventDescription
+
