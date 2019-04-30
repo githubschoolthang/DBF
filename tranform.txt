@@ -94,9 +94,15 @@ Irregular Event	<<	Flight
 
 Step 3	1 to 1 relationships
 
-LOGGED	(Service, Aricraft)
--	Service: serviceDate*, description, cost
 
+Step 4 1 to N relationships 
 
-
+USED (Aircraft, Flight {flightID})
+LOGGED	(Flight, Irregular event{eventNumber})
+BUILD (Model, Aircraft {aircraftID}
+LOGGED (Flight, Irregular event {eventNumber}
+CAPTAIN (Pilot, Flight{flightID})
+FIRST OFFICER (Pilot, Flight{flightID})
+FOR (Flight, Ticket{ticketNum})
+PLANNED (Route, Flight{flightID})
 
