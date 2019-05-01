@@ -119,3 +119,51 @@ qualifications
 
 
 STEP 7, no >2 relationships
+
+Step 8: Multi-relations/Superclasses
+
+Flight:	(disjoint)
+-	flightID*
+-	estDepartDateTime
+-	actDepartDateTime
+-	actArriveDateTime
+-	avgSpeed
+-	avgHeight
+-	estDuratioon
+-	estFuel
+
+	Short-Haul
+	-	flightID*
+	
+	Long-Haul
+	-	flightID**
+
+Aircraft:	(disjoint)
+-	aircraftID*
+
+	Short-Haul aircraft
+	-AircraftID**
+	-nailCargoCapacity
+
+	Long-Haul Aircraft
+	-AircraftID**
+	-numMedPacks
+	-numDefibrillators
+
+Staff
+-	staffID*
+-	name
+-	address
+-	email
+-	phone
+-	passPortNum
+	
+	Pilot
+	-staffID*
+	-qualifications (multi-valued)
+	-prevsHrsPilotExpt
+
+	Flight	Attendant
+	-staffID*
+	
+
