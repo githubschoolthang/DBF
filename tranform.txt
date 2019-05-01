@@ -107,4 +107,15 @@ FOR (Flight, Ticket{ticketNum})
 PLANNED (Route, Flight{flightID})
 ARRIVE (Location, Route{routeID})
 DEPART (Location, Route{routeID})
-RESERVED (Customer, Ticket{ticketNum})`
+RESERVED (Customer, Ticket{ticketNum})
+
+Step 5 M to N Relationships
+
+ADDITIONAL PILOTS(flightID*, staffID*)
+HOST(flightID*, staffID*)
+
+STEP 6 multivalued attribute
+qualifications
+
+
+STEP 7, no >2 relationships
