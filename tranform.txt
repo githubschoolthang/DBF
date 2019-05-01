@@ -166,4 +166,25 @@ Staff
 	Flight	Attendant
 	-staffID*
 	
+Stwp 9 Unions
+NEACC Member
+-	memberID* (surrogate key)
+-	flightGoldPoints
 
+	Customer
+	-customerID*
+	-name
+	-address
+	-country
+	-email
+	-phone
+	-birthday
+	-passportNum
+
+	Staff
+	-staffID*
+	-name
+	-address
+	-email
+	-phone
+	-passportNum
