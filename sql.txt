@@ -1,0 +1,98 @@
+CREATE TABLE	flight(
+flightID	,
+estDepartTime	,
+actDepartTime	,
+actArriveDateTime	,
+avgSpeed	,
+avgHeight	,
+estDuration	,
+estFuel	,
+
+PRIMARY	KEY	(flightID),
+);
+
+CREATE	TABLE	aircraft(
+aircraftID	,
+
+PRIMARY	KEY	(aircraftID),
+);
+
+CREATE	TABLE	route(
+routeID	,
+description	,
+PRIMARY	KEY(routeID),
+};
+
+CREATE	TABLE	location(
+airportCode	,
+country	,
+address	,
+phone	,
+)
+
+CREATE	TABLE	ticket(
+ticketNum	,
+luggageLimit	,
+seatNum	,
+classCode	,
+medicinalCondition	,
+mealChoice	.
+
+PRIMARY	KEY	(ticketNum),
+);
+
+CREATE	TABLE	customer(
+customerID	,
+name	,
+address	,
+country	,
+email	,
+phone	,
+birthdate	,
+passportNum	,
+
+PRIMARY	KEY	(customerID),
+);
+
+CREATE	TABLE	staff(
+staffID	,
+name	,
+address	,
+email	.
+phone	.
+passportNum	,
+
+PRIMARY	KEY	(	staffID	),
+);
+
+CREATE	TABLE	NEACCmember(
+memberID	,
+flightGoldPoints	,
+
+PRIMARY	KEY	(	memberID	),
+);
+
+
+
+
+CREATE	TABLE	service(
+serviceDate	NOT	NULL,
+aircraftID	NOT	NULL,
+description	,
+cost	,
+
+PRIMARY	KEY(	serviceDate,	aircraftID),
+REFRENCES	aircraft(	aircraftID	)
+);
+
+
+CREATE	TABLE	irregularEvent(
+eventNumber	NOT	NULL,
+flightID	,
+eventDateTime	,
+eventDesciption	,
+
+PRIMARY	KEY(	eventNumber,	flightID	),
+REFRENCES	flight(	flightID	)
+
+);
