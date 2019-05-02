@@ -1,190 +1,92 @@
 Step	1
-Flight:	(Short haul)	or	(long haul)
--	flightID	*unique
--	estDepartTime
--	actDepartTine
--	actArriveDateTime
--	avgSpeed
--	avgHeight
--	estDuration
--	estFuel
 
-Aircraft:	
--aircraftID *unique
+Flight{		flightID, estDepartTime, actDepartTine, actArriveDateTime, avgSpeed, avgHeight, estDuration, estFuel	}
 
+Aircraft{	aircraftID 	}
 
-SH Aircraft
--	mailCargoCapacity
+Model{	modelID, economySeats, businessSeats, firstClassSeats, cargoCapacity, fuelCapacity, length, wingspan, serviceHours	}
 
-LH Aircraft
--	numMedPacks
--	numDefibrillators
+Route{		routeID, description	}
 
+Location{	airportCode, country, 	address, phone		}
 
-Model:
--	modelID	**unique
--	economySeats
--	businessSeats
--	firstClassSeats
--	cargoCapacity
--	fuelCapacity
--	length
--	wingspan
--	serviceHours
+Ticket{	ticketNum, luggageLimit, seatNum, classCode, medicinalCondition, mealChoice	}
 
-Route:
--	routeID	**unique
--	description
+Customer{	customerID, name, address, country, 	email, 	phone, 	birthdate, 	passportNum	}
 
-Locatiion:
--	airportCode	*unique
--	country
--	address
--	phone
+Staff{	staffID	, name, address, email, phone, passportNum	}
 
-Ticket:
--	ticketNum	**unique
--	luggageLimit
--	seatNum
--	classCode
--	medicinalCondition
--	mealChoice
-
-Customer
--	customerID	**uniqueID
--	name
--	address
--	country
--	email
--	phone
--	birthdate
--	passportNum
-
-Staff
--	staffID	**unique
--	name
--	address
--	email
--	phone
--	passportNum
-
-Pilot
--	qualifications	**doublerectangle
--	prevHrsPilotExp
-
-
-NEACC Member
--	memberID	**uniqueID
--	flightGoldPoints
-
+NEACC Member{	memberID, flightGoldPoints	}
 
 
 Step 2, Weak entities
 
-Service		<<	aircraft
--	serviceDate	**unique
--	description
--	cost
+Service{	serviceDate, aircraftID, description, cost	}
 
-Irregular Event	<<	Flight
--	eventNumber	**unique
--	eventDateTime
--	eventDescription
+Irregular Event{	eventNumber, 	flightID, eventDateTime, eventDescription	}
 
 
-Step 3	1 to 1 relationships
+Step 3	1 to 1 relationships	(None)
 
 
 Step 4 1 to N relationships 
 
-USED (Aircraft, Flight {flightID})
-LOGGED	(Flight, Irregular event{eventNumber})
-BUILD (Model, Aircraft {aircraftID}
-LOGGED (Flight, Irregular event {eventNumber}
-CAPTAIN (Pilot, Flight{flightID})
-FIRST OFFICER (Pilot, Flight{flightID})
-FOR (Flight, Ticket{ticketNum})
-PLANNED (Route, Flight{flightID})
-ARRIVE (Location, Route{routeID})
-DEPART (Location, Route{routeID})
-RESERVED (Customer, Ticket{ticketNum})
+Flight {flightID, aircraftID}
+Irregular event{eventNumber, flightID}
+Service{serviceDate, aircraftID}
+Aircraft {aircraftID, modelID}
+Flight{flightID, staffID}
+Flight{flightID, staffID}
+Ticket{ticketNum, flightID}
+Flight{flightID, routeID}
+Route{routeID, airportCode}
+Route{routeID, airportCode}
+Ticket{ticketNum, customerID}
+
+
+
 
 Step 5 M to N Relationships
 
-ADDITIONAL PILOTS(flightID*, staffID*)
-HOST(flightID*, staffID*)
+ADDITIONAL PILOTS(flightID, staffID)
+HOST(flightID, staffID)
 
 STEP 6 multivalued attribute
-qualifications
+Pilot( qualifications, prevHrsPilotExp)
+pQualifications(staffID, qualifications)
 
 
 STEP 7, no >2 relationships
 
 Step 8: Multi-relations/Superclasses
 
-Flight:	(disjoint)
--	flightID*
--	estDepartDateTime
--	actDepartDateTime
--	actArriveDateTime
--	avgSpeed
--	avgHeight
--	estDuratioon
--	estFuel
+Flight: Long/Short haul (disjoint)
 
-	Short-Haul
-	-	flightID*
+Flight{	flightID, estDepartDateTime, actDepartDateTime, actArriveDateTime, avgSpeed, avgHeight, estDuratioon, estFuel	}
+
+Short-Haul{	flightID	}
 	
-	Long-Haul
-	-	flightID**
+Long-Haul{	flightID	}
 
-Aircraft:	(disjoint)
--	aircraftID*
+AirCraft: Long/Short haul (disjoint)
 
-	Short-Haul aircraft
-	-AircraftID**
-	-nailCargoCapacity
+Aircrafts{	aircraftID	}
 
-	Long-Haul Aircraft
-	-AircraftID**
-	-numMedPacks
-	-numDefibrillators
+Short-Haul aircraft{	AircraftID,	mailCargoCapacity	}
 
-Staff
--	staffID*
--	name
--	address
--	email
--	phone
--	passPortNum
+Long-Haul Aircraft{	AircraftID,	numMedPacks, 	numDefibrillators	}
+
+Staff: Pilot/Flight Attendant (overlapping)
+Staff{	staffID, name, 	address, email, phone, passPortNum	}
+
+Pilot{	staffID, qualifications (multi-valued), prevsHrsPilotExpt	}
+
+Flight	Attendant{	staffID	}
 	
-	Pilot
-	-staffID*
-	-qualifications (multi-valued)
-	-prevsHrsPilotExpt
 
-	Flight	Attendant
-	-staffID*
-	
-Stwp 9 Unions
-NEACC Member
--	memberID* (surrogate key)
--	flightGoldPoints
+Step 9 Unions
+NEACC Member{	memberID (surrogate key), flightGoldPoints	}
 
-	Customer
-	-customerID*
-	-name
-	-address
-	-country
-	-email
-	-phone
-	-birthday
-	-passportNum
+	Customer{	customerID, name, address, country, email, phone, birthday,                     	passportNum	}
 
-	Staff
-	-staffID*
-	-name
-	-address
-	-email
-	-phone
-	-passportNum
+	Staff{	staffID, name, address, email, phone, passportNum	}
