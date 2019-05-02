@@ -1,48 +1,13 @@
-CREATE TABLE	flight(
-flightID	,
-estDepartTime	,
-actDepartTime	,
-actArriveDateTime	,
-avgSpeed	,
-avgHeight	,
-estDuration	,
-estFuel	,
+CREATE	TABLE	NEACCmember(
+memberID		NOT	NULL,
+flightGoldPoints	,
 
-PRIMARY	KEY	(flightID),
-);
-
-CREATE	TABLE	aircraft(
-aircraftID	,
-
-PRIMARY	KEY	(aircraftID),
-);
-
-CREATE	TABLE	route(
-routeID	,
-description	,
-PRIMARY	KEY(routeID),
-};
-
-CREATE	TABLE	location(
-airportCode	,
-country	,
-address	,
-phone	,
-)
-
-CREATE	TABLE	ticket(
-ticketNum	,
-luggageLimit	,
-seatNum	,
-classCode	,
-medicinalCondition	,
-mealChoice	.
-
-PRIMARY	KEY	(ticketNum),
+PRIMARY	KEY	(	memberID	),
 );
 
 CREATE	TABLE	customer(
-customerID	,
+customerID	NOT	NULL,
+memberID	,
 name	,
 address	,
 country	,
@@ -52,10 +17,25 @@ birthdate	,
 passportNum	,
 
 PRIMARY	KEY	(customerID),
+FOREIGN	KEY(memberID)	REFRENCE	NEACCmember(memberID)
+);
+
+CREATE	TABLE	ticket(
+ticketNum	NOT	NULL,
+customerID	,
+flightID	,
+luggageLimit	,
+seatNum	,
+classCode	,
+medicinalCondition	,
+mealChoice	.
+
+PRIMARY	KEY	(ticketNum),
+FOREIGN	KEY( customerID, flightID)	REFRENCE	customer(customerID) flight(flightID)
 );
 
 CREATE	TABLE	staff(
-staffID	,
+staffID		NOT	NULL,
 name	,
 address	,
 email	.
@@ -65,12 +45,110 @@ passportNum	,
 PRIMARY	KEY	(	staffID	),
 );
 
-CREATE	TABLE	NEACCmember(
-memberID	,
-flightGoldPoints	,
 
-PRIMARY	KEY	(	memberID	),
+
+
+
+CREATE	TABLE	flightAttendant(
+staffID	NOT	NULL,
+flightID	,
+PRIMARY	KEY(staffID),
+FOREIGN	KEY(flightID)	 REFRENCE	flight(flightID)
+};
+
+CREATE	TABLE	pilot(
+staffID		NOT	NULL,
+flightID	,
+qualifications	,
+prevHrsPilotExp	,
+
+PRIMARY	KEY(staffID),
+FOREIGN	KEY(flightID)	REFRENCE	flight(flightIFD)
 );
+
+CREATE	TABLE	pQualifications(
+staffID		NOT	NULL,
+qualifications	NOT	NULL,
+
+PRIMARY	KEY(	staffID,	qualifications),
+REFRENCES	staff(staffID)
+);
+
+
+CREATE TABLE	flight(
+flightID	NOT	NULL,
+routeID	,
+estDepartTime	,
+actDepartTime	,
+actArriveDateTime	,
+avgSpeed	,
+avgHeight	,
+estDuration	,
+estFuel	,
+
+PRIMARY	KEY	(flightID),
+FOREIGN	KEY(routeID)	REFRENCE	route(routeID)
+);
+
+CREATE	TABLE	shortHaulFlight(
+flightID	NOT	NULL,
+aircraftID	,
+mailCargoCapacity	,
+PRIMARY	KEY	(flightID),
+FOREIGN	KEY	(aircraftID)	REFRENCE	aircraft(aircraftID)
+
+);
+
+
+
+CREATE	TABLE	longHaulFlight(
+flightID	NOT	NULL,
+aircraftID	,
+numMedPacks		,
+numDefribrillators	,
+PRIMARY	KEY	(flightID),
+FOREIGN	KEY	(aircraftID)	REFRENCE	aircraft(aircraftID)
+);
+
+CREATE	TABLE	aircraft(
+aircraftID	NOT	NULL	,
+modelID		,
+
+PRIMARY	KEY(	aircraftID),
+FOREIGN	KEY(	modelID)	REFERENCES	model(modelID)
+);
+
+CREATE	TABLE	longHaulAircraft(
+aircraftID	NOT	NULL,
+numMedPacks		,
+numDefibrillators	,
+
+PRIMARY	KEY(aircraftID)
+);
+
+CREATE	TABLE	shortHaulAircraft(
+aircraftID	NOT	NULL,
+mailCargoCapacity	,
+
+PRIMARY	KEY(aircraftID)
+);
+
+CREATE	TABLE	model(
+modelID	NOT	NULL,
+economySeats		,
+businesssSeats		,
+firstClassSeats	,
+cargoCapacity	,
+fuelCapacity	,
+length	,
+wingspan	,
+seviceHours	,
+
+PRIMARY	KEY	(modelID)
+);
+
+
+
 
 
 
@@ -88,73 +166,32 @@ FOREIGN KEY(	aircraftID),	REFRENCES	aircraft(	aircraftID	)
 
 CREATE	TABLE	irregularEvent(
 eventNumber	NOT	NULL,
-flightID	,
+flightID	NOT NULL,
 eventDateTime	,
 eventDesciption	,
 
 PRIMARY	KEY(	eventNumber,	flightID	),
 FOREIGN	KEY	(flightID)	REFRENCES	flight(	flightID	)
-
-);
-
-CREATE	TABLE	service(
-serviceDate	NOT	NULL,
-flightID	,
-
-PRIMARY	KEY(	serviceDate),
-FOREIGN	KEY(	flightID	) REFERENCES	flight(flightID)
-);
-
-
-CREATE	TABLE	aircraft(
-aircraftID	NOT	NULL	,
-modelID		,
-
-PRIMARY	KEY(	aircraftID),
-FOREIGN	KEY(	modelID)	REFERENCES	model(modelID)
-);
-
-
-CREATE	TABLE	flight(
-flightID	NOT	NULL	,
-staffID		,
-
-PRIMARY	KEY(	flightID	),
-FOREIGN	KEY(	staffID)	REFRENCES	staff(staffID)
-);
-
-CREATE	TABLE	ticket(
-ticketNum	NOT	NULL	,
-flightID	,
-
-PRIMARY	KEY(	ticketNum),	
-FOREIGN	KEY(	flightID)	REFRENCES	flight(	flightID)
-);
-
-CREATE	TABLE	flight(
-flightID	NOT	NULL	,
-routeID		,
-
-PRIMARY	KEY(	flightID),
-FOREIGN	KEY(	routeID)	REFRENCES	flight(flightID)
 );
 
 
 CREATE	TABLE	route(
-routeID		NOT	NULL,	
+routeID	,
 airportCode	,
+description	,
+PRIMARY	KEY(routeID),
+FOREIGN	KEY(	airportCode)	REFRENCE	location(airportCode)
+};
 
-PRIMARY	KEY	(routeID),
-FOREIGN	KEY	(airportCode),	REFRENCES	location(airportCode)
+CREATE	TABLE	location(
+airportCode	NOT	NULL,
+country	,
+address	,
+phone	,
+
+PRIMARY	KEY(	airportCode)
 );
 
-CREATE	TABLE	ticket(
-ticketNum		NOT	NULL,
-customerID	,
-
-PRIMARY	KEY	(ticketNum),
-FOREIGN	KEY(	customerid)	REFRENCES	customer(customerID)
-);
 
 CREATE	TABLE	additionalPilots(
 flightID	NOT	NULL,
@@ -164,27 +201,13 @@ PRIMARY	KEY(	flightID,	staffID	),
 REFRENCES	staff(staffID)
 );
 
+
+
+
+
 CREATE	TABLE	host(
 flightID	NOT	NULL,
 staffID		NOT	NULL,
+PRIMARY	KEY	(flightID,	staffID),
 REFRENCES	staff(staffID)
 );
-
-CREATE	TABLE	pilot(
-staffID		NOT	NULL,
-qualifications	,
-prevHrsPilotExp	,
-
-PRIMARY	KEY(staffID)
-);
-
-CREATE	TABLE	pQualifications(
-staffID		NOT	NULL,
-qualifications	NOT	NULL,
-
-PRIMARY	KEY(	staffID,	qualifications),
-REFRENCES	staff(staffID)
-);
-
-
-
